@@ -69,18 +69,24 @@ def delete_character():
     if line and char_cursor < len(line):
         editor_buffer[line_cursor] = line[:char_cursor] + line[char_cursor + 1:]
 
+import re
+
 def delete_next_word():
     global editor_buffer, char_cursor
+
     line = editor_buffer[line_cursor]
     if char_cursor >= len(line):
-        char_cursor = len(line.strip()) - 1
+        char_cursor = len(line.strip())-1
         return
-    match = re.search(r"\s+", line[line_cursor:])
+    remainder = line[char_cursor:]
+    match = re.match(r'\s*(\S+\s*)', remainder)
     if match:
-        end = char_cursor + match.end() + 1
+        end = char_cursor + match.end()
         editor_buffer[line_cursor] = line[:char_cursor] + line[end:]
     else:
+
         editor_buffer[line_cursor] = line[:char_cursor]
+
 
 def cursor_left():
     global char_cursor
@@ -178,8 +184,8 @@ def print_help_menu():
     print("  a<text> : Append <text> after cursor")
     print("  h       : Move cursor left")
     print("  l       : Move cursor right")
-    print("  k       : Move cursor up")  # Note: Swapped j/k to match vim convention
-    print("  j       : Move cursor down")  # Note: Swapped j/k to match vim convention
+    print("  j       : Move cursor up")
+    print("  k       : Move cursor down")
     print("  b       : Move cursor to beginning of previous word")
     print("  w       : Move cursor to beginning of next word")
     print("  ^       : Move cursor to beginning of the line")
@@ -253,14 +259,15 @@ def handle_command(command_input):
         if action:
             action()
 
-    if command_input in (';', '.', 'q', '?','u'):
+    if command_input in (';', '.'):
         handle_switch_command(command_input)
     elif command_input.startswith(('i', 'a')):
         handle_text_command(command_input)
         last_command = command_input
     else:
         handle_action_command(command_input)
-        last_command = command_input
+        if command_input  not in ('u', 'r'):
+            last_command = command_input
 
 def launch_editor():
     global editor_buffer

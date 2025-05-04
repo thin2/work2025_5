@@ -108,6 +108,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\基于网络流量的恶意攻击检测\submission.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\基于网络流量的恶意攻击检测\test_data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
