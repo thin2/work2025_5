@@ -1,0 +1,17 @@
+\documentclass[tikz, border=5mm]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{math}
+\begin{document}
+
+\begin{tikzpicture}[tikzmath={ R2 = sqrt(2); }]
+\draw[step=0.5cm, gray, very thin] (-1.50,-2.50) grid (7073.50,10.00);
+\draw[ultra thick, fill=orange!30, draw=black] ({-2+5*sqrt(2)}, {2+5*sqrt(2)}) -- ({-1+5*sqrt(2)}, {1+5*sqrt(2)}) -- ({-3+5*sqrt(2)}, {1+5*sqrt(2)}) -- cycle; % Medium triangle
+\draw[ultra thick, fill=orange!30, draw=black] ({sqrt(2)}, {-1+6*sqrt(2)}) -- ({(3/2)*sqrt(2)}, {-1+(11/2)*sqrt(2)}) -- ({sqrt(2)}, {-1+5*sqrt(2)}) -- cycle; % Small triangle 1
+\draw[ultra thick, fill=orange!30, draw=black] ({-1+5000*sqrt(2)}, {5*sqrt(2)}) -- ({-1+5002*sqrt(2)}, {5*sqrt(2)}) -- ({-1+5001*sqrt(2)}, {4*sqrt(2)}) -- cycle; % Large triangle 2
+\draw[ultra thick, fill=orange!30, draw=black] ({sqrt(2)}, {sqrt(2)}) -- ({sqrt(2)}, {-sqrt(2)}) -- ({0}, {0}) -- cycle; % Large triangle 1
+\draw[ultra thick, fill=orange!30, draw=black] ({0}, {0}) -- ({(1/2)*sqrt(2)}, {-(1/2)*sqrt(2)}) -- ({0}, {-sqrt(2)}) -- ({-(1/2)*sqrt(2)}, {-(1/2)*sqrt(2)}) -- cycle; % Square
+\draw[ultra thick, fill=orange!30, draw=black] ({1/2}, {1/2-sqrt(2)}) -- ({1/2}, {-1/2-sqrt(2)}) -- ({-1/2}, {-1/2-sqrt(2)}) -- cycle; % Small triangle 2
+\fill[red] (0,0) circle (2pt); % Origin
+\end{tikzpicture}
+
+\end{document}

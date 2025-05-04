@@ -1,0 +1,9 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+\draw[step=0.5cm,gray,very thin] (0.0,0.0) grid (4.0,4.0);
+\draw (0,4) -- (0,0) -- (4,0) -- (0,4) -- cycle;
+\fill[red] (0,0) circle (1mm);
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,12 @@
+#
+# '*line1', ' line2'
+#
+;
+O
+aline2
+o
+iline1
+yy
+dd
+P
+q

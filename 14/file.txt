@@ -1,0 +1,10 @@
+Sydney,Newcastle,170
+Sydney,Cessnock,161
+Newcastle,Sydney,168
+Huskisson,Vincentia,4
+Sydney,Huskisson,185
+Melbourne,Eden,555
+Eden,Bega,54
+Sydney,Ulladulla,226
+Ulladulla,Bega,198
+Melbourne,Sydney,877
