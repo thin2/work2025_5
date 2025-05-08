@@ -49,8 +49,9 @@ def insert_at_cursor(text):
         editor_buffer.append("")
         line_cursor = 0
         char_cursor = 0
-
     line = editor_buffer[line_cursor]
+    if line=="":
+        char_cursor=0
     editor_buffer[line_cursor] = line[:char_cursor] + text + line[char_cursor:]
 
 def append_at_cursor(text):
@@ -212,6 +213,7 @@ def handle_command(command_input):
         return
 
     def handle_switch_command(cmd):
+        backup_state()
         global line_highlight, char_highlight
         if cmd == ';':
             line_highlight = not line_highlight
@@ -220,6 +222,7 @@ def handle_command(command_input):
         show_editor()
 
     def handle_text_command(cmd):
+        backup_state()
         op, text = cmd[0], cmd[1:]
         if not text:
             return
@@ -228,7 +231,8 @@ def handle_command(command_input):
         elif op == 'a':
             append_at_cursor(text)
         show_editor()
-        backup_state()
+
+
 
     def handle_action_command(cmd):
         global last_command
@@ -240,17 +244,17 @@ def handle_command(command_input):
             'h': lambda: (cursor_left(), show_editor()),
             'l': lambda: (cursor_right(), show_editor()),
             'b': lambda: (move_word_back(), show_editor()),
-            'w': lambda: (move_word_forward(), show_editor()),
+            'w': lambda: (backup_state(),move_word_forward(), show_editor()),
             'x': lambda: (delete_character(), show_editor()),
-            'dw': lambda: (delete_next_word(), show_editor(), backup_state()),
+            'dw': lambda: (backup_state(),delete_next_word(), show_editor()),
             '$': lambda: (move_line_end(), show_editor()),
-            '^': lambda: (move_line_start(), show_editor(), backup_state()),
+            '^': lambda: (backup_state(),move_line_start(), show_editor()),
             'yy': lambda: (backup_state(), copy_current_line(), show_editor()),
-            'p': lambda: (paste_line_below(), show_editor(), backup_state()),
-            'P': lambda: (paste_line_above(), show_editor(), backup_state()),
-            'O': lambda: (insert_blank_above(), show_editor(), backup_state()),
-            'o': lambda: (insert_blank_below(), show_editor(), backup_state()),
-            'dd': lambda: (delete_current_line(), show_editor(), backup_state()),
+            'p': lambda: (backup_state(),paste_line_below(), show_editor()),
+            'P': lambda: (backup_state(),paste_line_above(), show_editor()),
+            'O': lambda: (backup_state(),insert_blank_above(), show_editor()),
+            'o': lambda: (backup_state(),insert_blank_below(), show_editor()),
+            'dd': lambda: (backup_state(),delete_current_line(), show_editor()),
             'j': lambda: (move_line_up(), show_editor()),
             'k': lambda: (move_line_down(), show_editor())
         }

@@ -31,35 +31,7 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\5\classification_example.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\5\dataframe_test.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\5\prediction_results.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\5\prediction_results1.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\5\regression_example(1).csv">
+        <entry key="\8\directory.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -102,6 +74,13 @@
           </value>
         </entry>
         <entry key="\9\heart(1).csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\PY\task7\test_data.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
