@@ -17,6 +17,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\3\housing.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\4\2-0 高速数据80%.csv">
           <value>
             <Attribute>
@@ -80,13 +87,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\PY\task7\test_data.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\基于网络流量的恶意攻击检测\submission.csv">
           <value>
             <Attribute>
@@ -98,6 +98,20 @@
           <value>
             <Attribute>
               <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\基于网络流量的恶意攻击检测\test_predictions.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\深度学习项目-2025\weibo_senti_100k.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
             </Attribute>
           </value>
         </entry>
