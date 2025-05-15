@@ -1,115 +1,51 @@
-class Customer:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def __str__(self):
-        return f"{self.name}:{self.age}"
-    def __repr__(self):
-        return str(self)
-    def __eq__(self, other):
-        return (self.age == other.age and self.name == other.name)
-    def __gt__(self, other):
-        if self.age == other.age:
-            return self.name > other.name
-        else:
-            return self.age > other.age
-    def __lt__(self, other):
-        if self.age == other.age:
-            return self.name < other.name
-        else:
-            return self.age < other.age
-    def __ge__(self, other):
-        return not self < other
-    def __le__(self, other):
-        return not self > other
+import tkinter as tk
+from tkinter import messagebox
 
+def custom_encrypt(key: int, const_a: int, const_b: int) -> str:
+    encrypted = (key * const_a + const_b) % 100000000
+    encrypted_str = f"{encrypted:08d}"
+    return encrypted_str[:6]
 
-# (a) 实现 Stack 类
-class Stack:
-    def __init__(self):
-        self.items = []  # 用列表实现栈
+def encrypt():
+    try:
+        key = int(entry_key.get())
+        const_a = int(entry_const_a.get())
+        const_b = int(entry_const_b.get())
+    except ValueError:
+        messagebox.showerror("错误", "请输入有效的整数")
+        return
 
-    def clear(self):
-        self.items = []
+    encrypted = custom_encrypt(key, const_a, const_b)
+    result_label.config(text=f"加密结果：{encrypted}")
 
-    def isEmpty(self):
-        return len(self.items) == 0
+# 创建主窗口
+root = tk.Tk()
+root.title("加密器")
+root.geometry("320x280")
 
-    def push(self, data):
-        self.items.append(data)
+# 密钥输入
+tk.Label(root, text="请输入数字密钥 (key):").pack(pady=5)
+entry_key = tk.Entry(root)
+entry_key.pack()
 
-    def pop(self):
-        if self.isEmpty():
-            return None
-        return self.items.pop()
+# const_a 输入
+tk.Label(root, text="请输入乘数常量 (const_a):").pack(pady=5)
+entry_const_a = tk.Entry(root)
+entry_const_a.insert(0, "172391")  # 默认值
+entry_const_a.pack()
 
-    def peek(self):
-        if self.isEmpty():
-            return None
-        return self.items[-1]
+# const_b 输入
+tk.Label(root, text="请输入加数常量 (const_b):").pack(pady=5)
+entry_const_b = tk.Entry(root)
+entry_const_b.insert(0, "271828")  # 默认值
+entry_const_b.pack()
 
-    def display(self):
-        # 显示栈顶在最右侧的元素排列
-        print("Stack:", self.items)
+# 加密按钮
+tk.Button(root, text="加密", command=encrypt).pack(pady=10)
 
+# 显示结果
+result_label = tk.Label(root, text="加密结果：")
+result_label.pack(pady=10)
 
-# (b) 实现 StackSort 类
-class StackSort:
-    def __init__(self, data):
-        # 定义两个栈：stack1 存放原始数据，stack2 用于排序
-        self.stack1 = Stack()
-        self.stack2 = Stack()
-        for item in data:
-            self.stack1.push(item)
-
-    def sort(self):
-        # 使用辅助栈对 stack1 中的元素进行排序，排序结果存储在 stack2 中
-        while not self.stack1.isEmpty():
-            temp = self.stack1.pop()
-            # 当 stack2 非空且其栈顶元素大于 temp 时，移回 stack1
-            while not self.stack2.isEmpty() and self.stack2.peek() > temp:
-                self.stack1.push(self.stack2.pop())
-            self.stack2.push(temp)
-
-    def display(self):
-        print("Stack1:", self.stack1.items)
-        print("Stack2:", self.stack2.items)
-
-
-if __name__ == "__main__":
-    # 题目所给测试数据
-    data1 = [
-        Customer("Alice", 89),
-        Customer("Bobby", 40),
-        Customer("Calvin", 52),
-        Customer("Dianna", 67),
-        Customer("Evdee", 42)
-    ]
-    stackSort1 = StackSort(data1)
-    print("Before stack sort:")
-    stackSort1.display()
-    stackSort1.sort()
-    print("After stack sort:")
-    stackSort1.display()
-
-    # 测试只有一个元素
-    data2 = [Customer("Zack", 50)]
-    stackSort2 = StackSort(data2)
-    print("\nTest Case 2 - Before sort:")
-    stackSort2.display()
-    stackSort2.sort()
-    print("Test Case 2 - After sort:")
-    stackSort2.display()
-
-    # 测试多个年龄相同但名字不同的情况
-    data3 = [
-        Customer("Anna", 30),
-        Customer("Bella", 30),
-        Customer("Cara", 30)
-    ]
-    stackSort3 = StackSort(data3)
-    print("\nTest Case 3 - Before sort:")
-    stackSort3.display()
-    stackSort3.sort()
-    print("Test Case 3 - After sort:")
-    stackSort3.display()
+# 启动事件循环
+root.mainloop()

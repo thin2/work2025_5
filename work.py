@@ -12,7 +12,7 @@ def dispCourses(lst=[]):
     for course in lst:
         print('|'.join(item.ljust(13) for item in course)+'|')
     print('=' * 83)
-    print(f"共{len(lst)}条记录")
+    print(f"共{len(lst)}条记录。")
     print("请输入操作码：1.添加课程 2.修改课程 3.删除课程 4.课程排序 0.退出")
 
 
@@ -33,7 +33,7 @@ def addCourse():
             continue
         course_no = info[0].strip()
         if isCourseExist(course_no) is not None:
-            print(f"《{course_no}:{info[1]}》已存在，无需重复添加！")
+            print(f"《{course_no}.{info[1]}》已存在，无需重复添加！")
             continue
         courses.append([item.strip() for item in info])
         count += 1
@@ -61,7 +61,6 @@ def delCourse():
     confirm = input(f"即将删除编号为{course_no}的课程信息，确认请输入'yes'。\n").strip()
     if confirm.lower() == 'yes':
         del courses[idx]
-        print("删除课程信息成功。")
     else:
         print("已放弃删除操作，数据未作任何修改。")
 
@@ -69,15 +68,14 @@ def sortCourse():
     field_map = {
         1: 0, 2: 1, 3: 2, 4: 3, 5: 4
     }
-    field = int(input("输入排序的字段号码：1.课程号 2.课程名称 3.课程类型 4.开课单位 5.开课学期\n"))
+    field = int(input("输入排序的字段号码：1.课程号 2.课程名称 3.课程类型 4.开课专业 5.开课学期\n"))
     if field not in field_map:
         print("输入的字段号码有错。")
         return
     courses.sort(key=lambda x: x[field_map[field]])
     print("排序完成。")
-
+dispCourses(courses)
 while True:
-    dispCourses(courses)
     try:
         key = int(input())
     except ValueError:
@@ -85,12 +83,16 @@ while True:
         continue
     if key == 1:
         addCourse()
+        dispCourses(courses)
     elif key == 2:
         modiCourse()
+        dispCourses(courses)
     elif key == 3:
         delCourse()
+        dispCourses(courses)
     elif key == 4:
         sortCourse()
+        dispCourses(courses)
     elif key == 0:
         print("退出系统成功。")
         break
