@@ -12,10 +12,10 @@ opts = ['?', '.', ';', 'h', 'j', 'k', 'l', '^', '$', 'w', 'b', 'i', 'a', 'x', 'd
         'o', 'O', 'u', 'r', 's', 'q']
 
 def display_lines():
-    if not lines :
-        return
+    # if not lines :
+    #     return
     for idx, line in enumerate(lines):
-        is_current_row = (idx == current1)
+        is_current_row = ((idx+1) == current1)
         is_line_empty = not line.strip()
         if is_line_empty and not is_current_row:
             continue
@@ -37,50 +37,62 @@ def display_lines():
             print()
 
 def save_state():
-    UndoStack.append((lines.copy(), current1, current2, row_enable, col_enable))
+    UndoStack.append((lines.copy(), current1, current2, row_enable, col_enable,last_opt,copy_text))
 def undo():
     global lines, current1, current2, row_enable, col_enable
     if UndoStack:
-        lines, current1, current2, row_enable, col_enable = UndoStack.pop()
+        lines, current1, current2, row_enable, col_enable, last_opt, copy_text = UndoStack.pop()
 def insert_text(text):
     global lines, current2, current1
     if not lines:
         lines.append("")
-        current1 = 0
+        current1 = 1
         current2 = 0
-    line = lines[current1]
-    lines[current1] = line[:current2] + text + line[current2:]
+    current11=max(0,current1-1)
+    line = lines[current11]
+    lines[current11] = line[:current2] + text + line[current2:]
 def append_text(text):
     global lines, current2, current1
     if not lines:
         lines.append("")
-        current1 = 0
+        current1 = 1
         current2 = 0
-    line = lines[current1]
-    lines[current1] = line[:current2] + text + line[current2:]
-    current2 += len(text)
+    current11=max(0,current1-1)
+    line = lines[current11]
+    lines[current11] = line[:current2+1] + text + line[current2+1:]
+    if current2==0:
+        current2 += len(text)-1
+    else:
+        current2 += len(text)
+
 
 
 def det_c():
     global lines
-    line = lines[current1]
+    if  not lines:
+        return
+    current11=max(0,current1-1)
+    line = lines[current11]
     if line and current2 < len(line):
-        lines[current1] = line[:current2] + line[current2 + 1:]
+        lines[current11] = line[:current2] + line[current2 + 1:]
 
 
 def det_w():
     global lines, current2
-    line = lines[current1]
+    if  not lines:
+        return
+    current11=max(0,current1-1)
+    line = lines[current11]
 
     if current2 >= len(line):
         current2 = len(line.strip()) - 1
         return
-    match = re.search(r"\s+", line[current1:])
+    match = re.search(r"\s+", line[current2:])
     if match:
         end = current2 + match.end() + 1
-        lines[current1] = line[:current2] + line[end:]
+        lines[current11] = line[:current2] + line[end:]
     else:
-        lines[current1] = line[:current2]
+        lines[current11] = line[:current2]
 
 
 def move_left():
@@ -189,33 +201,34 @@ def det_l():
 
 
 def show_help():
-    text = """Available commands:
-    ? – display help
-    . – toggle row cursor
-    ; – toggle line cursor
-    h – move left
-    j – move down
-    k – move up
-    l – move right
-    ^ – move to line start
-    $ – move to line end
-    w – next word
-    b – previous word
-    i<text> – insert text
-    a<text> – append text
-    x – det char
-    dw – det word
-    yy – copy line
-    dd – det line
-    p – paste below
-    P – paste above
-    o – insert line below
-    O – insert line above
-    u – undo
-    r – repeat last command
-    s – show content
-    q – quit"""
-    print(text)
+    help_menu = """? - display this help info
+    ; - toggle row cursor on and off
+    . - toggle line cursor on and off
+    h - move cursor left
+    j - move cursor up
+    k - move cursor down
+    l - move cursor right
+    ^ - move cursor to beginning of the line
+    $ - move cursor to end of the line
+    w - move cursor to beginning of next word
+    b - move cursor to beginning of previous word
+    i - insert <text> before cursor
+    a - append <text> after cursor
+    x - delete character at cursor
+    dw - delete word and trailing spaces at cursor
+    yy - copy current line to memory
+    p - paste copied line(s) below line cursor
+    P - paste copied line(s) above line cursor
+    dd - delete line
+    o - insert empty line below
+    O - insert empty line above
+    u - undo previous command
+    r - repeat last command
+    s - show content
+    q - quit program
+    """
+    print(help_menu)
+
 
 def opts_process(opt):
     global last_opt, row_enable, col_enable

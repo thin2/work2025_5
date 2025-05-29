@@ -61,6 +61,7 @@ def delCourse():
     confirm = input(f"即将删除编号为{course_no}的课程信息，确认请输入'yes'。\n").strip()
     if confirm.lower() == 'yes':
         del courses[idx]
+        print(f"删除课程信息成功。")
     else:
         print("已放弃删除操作，数据未作任何修改。")
 
@@ -73,9 +74,9 @@ def sortCourse():
         print("输入的字段号码有错。")
         return
     courses.sort(key=lambda x: x[field_map[field]])
-    print("排序完成。")
-dispCourses(courses)
+
 while True:
+    dispCourses(courses)
     try:
         key = int(input())
     except ValueError:
@@ -83,16 +84,16 @@ while True:
         continue
     if key == 1:
         addCourse()
-        dispCourses(courses)
+
     elif key == 2:
         modiCourse()
-        dispCourses(courses)
+
     elif key == 3:
         delCourse()
-        dispCourses(courses)
+
     elif key == 4:
         sortCourse()
-        dispCourses(courses)
+
     elif key == 0:
         print("退出系统成功。")
         break
